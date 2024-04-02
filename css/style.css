@@ -1,0 +1,23 @@
+body{
+	
+	background-color: white;
+	font-family: aerial;
+
+}
+
+table{
+
+	border-collapse: collapse;
+}
+
+.deleteButton{
+	width: 10%;
+	height: 5%;
+	color: white;
+	background-color: red;
+}
+
+.deleteButton:hover{
+	background-color: darkred;
+
+}
