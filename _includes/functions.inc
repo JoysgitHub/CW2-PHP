@@ -57,4 +57,56 @@ function template( $file, $args=array() ){
    return ob_get_clean();
 }
 
+/**
+ * Password Complexity checker
+ *
+ * @param $args   - String password value
+ * @return bool	  - Outputs true if password meets complexity criteria or false if fails.
+ *
+ * 
+ */
+function complexityChecker($password):bool{
+	$upperLetters = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+	$lowerLetters = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+	$numbers = array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+	$symbols = array(
+    '!', '@', '#', '%', '^', '&', '*', '(', ')',
+    '-', '_', '=', '+', '[', ']', '{', '}', '|', '\\',
+    ';', ':', '"', '\'', ',', '.', '<', '>', '/', '?');
+
+	$uLetters = false;
+	$lLetters = false;
+	$num = false;
+	$symb = false;
+
+	for ($i=0; $i < strlen($password); $i++) { 
+		if (in_array($password[$i], $upperLetters)) {
+			$uLetters = true;
+		}
+	}
+	for ($i=0; $i < strlen($password); $i++) { 
+		if (in_array($password[$i], $lowerLetters)) {
+			$lLetters = true;
+		}
+	}
+	for ($i=0; $i < strlen($password); $i++) { 
+		if (in_array($password[$i], $numbers)) {
+			$num= true;
+		}
+	}
+	for ($i=0; $i < strlen($password); $i++) { 
+		if (in_array($password[$i], $symbols)) {
+			$symb= true;
+		}
+	}
+
+	if ($uLetters && $lLetters && $num && $symb) {
+		 
+		return true;
+	}else {
+		return false;
+	}
+
+}
+
 ?>
