@@ -27,17 +27,17 @@ if (isset($_SESSION['id'])) {
 	   ID:
 	   <input name="txtid" type="text" value="$lastId" readonly  /><br/>
 	   First Name :
-	   <input name="txtfirstname" type="text" value="" /><br/>
+	   <input name="txtfirstname" type="text" value="" required /><br/>
 	   Surname :
-	   <input name="txtlastname" type="text"  value="" /><br/>
+	   <input name="txtlastname" type="text"  value="" required /><br/>
 	   Date Of Birth:
-	   <input name="txtdate" type="text"  value="" placeholder="YYYY-MM-DD" /><br/>
+	   <input name="txtdate" type="text"  value="" placeholder="YYYY-MM-DD" required /><br/>
 	   Number and Street :
-	   <input name="txthouse" type="text"  value="" /><br/>
+	   <input name="txthouse" type="text"  value="" required /><br/>
 	   Town :
-	   <input name="txttown" type="text"  value="" /><br/>
+	   <input name="txttown" type="text"  value="" required /><br/>
 	   County :
-	   <input name="txtcounty" type="text"  value="" /><br/>
+	   <input name="txtcounty" type="text"  value="" required /><br/>
 	   
 
 		Country :
@@ -57,7 +57,7 @@ if (isset($_SESSION['id'])) {
 	   </select/><br/>
 
 	   Postcode :
-	   <input name="txtpostcode" type="text"  value="" /><br/>
+	   <input name="txtpostcode" type="text"  value="" reuired /><br/>
 		Password:
 	   <input name="txtpassword" type="password"  value="" /><br/>
 		Confirm Password:
@@ -78,6 +78,11 @@ if (isset($_SESSION['id'])) {
 		echo "<p style='color: red;font-weight: bold; '> $_GET[error]</p>";
    }
 
+   if (isset($_GET['success'])) {
+			  
+	   echo "<p style='color: green;font-weight: bold; '> $_GET[success] </p>";
+
+	}
 } else {
    header("Location: index.php");
 }

@@ -64,7 +64,7 @@ if (mysqli_num_rows($ret) > 0) {
 	$lastId = $lastId['studentid'];
 	echoPara("LAST ID", $lastId);
 }else {
-	$lastId = "20000000";
+	$lastId = "19999999";
 }
 echo "------------------------------<br>";
 

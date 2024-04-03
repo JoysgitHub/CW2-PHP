@@ -5,6 +5,7 @@ include("_includes/config.inc");
 include("_includes/dbconnect.inc");
 include("_includes/functions.inc");
 include ("_includes/passwordLib.php");
+
 //xxs safety
 function cleanInput($input):string{
 	$cleanOut = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
@@ -12,16 +13,10 @@ function cleanInput($input):string{
 
 }
 
-
+//generate password hash
 function generatePasswordHash($password): string{
 	$hashedPass = password_hash($password, $algo=PASSWORD_DEFAULT);	
 	return $hashedPass;
-}
-
-
-function echoPara($name, $value):void{
-	
-	echo "$name: $value<br>";
 }
 
 
@@ -29,7 +24,7 @@ function echoPara($name, $value):void{
 // check logged in
 if (isset($_SESSION['id'])) {
 
-
+	//Check if any fields are empty and return error
 	foreach ($_POST as $key => $value) {
 		if (empty($value)) {
 			header("Location: addstudent.php?error=Fields Cannot Be Left Empty");
@@ -38,7 +33,7 @@ if (isset($_SESSION['id'])) {
 	}
 
 
-
+	//Clean all inputs 
 	$id = cleanInput($_POST['txtid']);
 	$name = cleanInput($_POST['txtfirstname']);
 	$lastname = cleanInput($_POST['txtlastname']);
@@ -52,7 +47,7 @@ if (isset($_SESSION['id'])) {
 	$confirmPassword = cleanInput($_POST['confirmpass']);
 	
 
-
+	//Check if passwords match
 	if ($password != $confirmPassword) {
 		header("Location: addstudent.php?error=Password Confirmation Mismatch");
 		die();
@@ -63,35 +58,25 @@ if (isset($_SESSION['id'])) {
 		header("Location: addstudent.php?error=Password Must be over 8 characters");
 		die();
 		}
-	
+
+	//Enforce password policy	
 	if (!complexityChecker($password)) {
 
-		header("Location: addstudent.php?error= Password must contain at least a uppercase letter,a lowercase letter, a number, and a symbol");
+		header("Location: addstudent.php?error= Password must contain at least one uppercase letter,a lowercase letter, a number, and a symbol");
 		die();
-	}else {
-		echo "PASSWORD MEETS CRITERIA<br/>";
 	}
-
 	
 	$passHash = generatePasswordHash($password);
-	echoPara("HASH", $passHash);
 
-	foreach ($_POST as $key => $value) {
-		echo "$key: $value<br>";
-	
-	}
-
-
+	//SQL statment
 	$sql = "INSERT INTO student (studentid, password, dob, firstname, lastname, house, town, county, country, postcode)  VALUES ('$id','$passHash','$dob' , '$name', '$lastname', '$street', '$town', '$county', '$country', '$postcode');";
 
 	$ret = mysqli_query($conn, $sql);
-	if (!$ret) {
-		 // Query error
-		$errorMessage = mysqli_error($conn);
-		echo "Query failed: $errorMessage";
-	}
-	echo "SQL: $sql<br/>";
-   // render the template
+
+	//Return successful message after completion to the addstudent.php page	
+	header("Location: addstudent.php?success=Successfully Added Student");
+
+
    echo template("templates/default.php", $data);
 
 } else {
