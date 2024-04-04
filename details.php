@@ -24,9 +24,7 @@ if (isset($_SESSION['id'])) {
       $sql .= "postcode ='" . $_POST['txtpostcode']  . "' ";
       $sql .= "where studentid = '" . $_SESSION['id'] . "';";
       $result = mysqli_query($conn,$sql);
-
-      $data['content'] = "<p>Your details have been updated</p>";
-
+	header("Location: details.php?success=Your details have been updated");
    }
    else {
       // Build a SQL statment to return the student record with the id that
@@ -35,37 +33,60 @@ if (isset($_SESSION['id'])) {
       $result = mysqli_query($conn,$sql);
       $row = mysqli_fetch_array($result);
 
-      // using <<<EOD notation to allow building of a multi-line string
-      // see http://stackoverflow.com/questions/6924193/what-is-the-use-of-eod-in-php for info
-      // also http://stackoverflow.com/questions/8280360/formatting-an-array-value-inside-a-heredoc
-      $data['content'] = <<<EOD
-
-   <h2>My Details</h2>
-   <form name="frmdetails" action="" method="post">
-   First Name :
-   <input name="txtfirstname" type="text" value="{$row['firstname']}" /><br/>
-   Surname :
-   <input name="txtlastname" type="text"  value="{$row['lastname']}" /><br/>
-   Number and Street :
-   <input name="txthouse" type="text"  value="{$row['house']}" /><br/>
-   Town :
-   <input name="txttown" type="text"  value="{$row['town']}" /><br/>
-   County :
-   <input name="txtcounty" type="text"  value="{$row['county']}" /><br/>
-   Country :
-   <input name="txtcountry" type="text"  value="{$row['country']}" /><br/>
-   Postcode :
-   <input name="txtpostcode" type="text"  value="{$row['postcode']}" /><br/>
-   <input type="submit" value="Save" name="submit"/>
-   </form>
-
-EOD;
-
+	 echo "<body class=\"bg-gray-800\">";
+    echo "<div class='container mx-auto p-8'>";
+    echo "<h2 class='text-2xl text-white text-center mb-4'>My Details</h2>";
+    echo "<div class='flex justify-center'>";
+    echo "<img src='studentimage.php?id=$_SESSION[id]' class='h-40  w-48  rounded-lg ' alt='Student Image'><br/>";
+    echo "</div>";
+	echo "<br/>";
+ 
    }
 
-   // render the template
-   echo template("templates/default.php", $data);
+   /* // render the template */
+   /* echo template("templates/default.php", $data); */
+echo "<form name='frmdetails' action='$_SERVER[PHP_SELF]' method='post' class='max-w-md mx-auto'>";
+    echo "<div class='mb-4'>";
+    echo "<label for='txtfirstname' class='block text-gray-300 text-sm font-bold mb-2'>First Name:</label>";
+    echo "<input name='txtfirstname' type='text' value='$row[firstname]' class='w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500'>";
+    echo "</div>";
+    echo "<div class='mb-4'>";
+    echo "<label for='txtlastname' class='block text-gray-300 text-sm font-bold mb-2'>Surname:</label>";
+    echo "<input name='txtlastname' type='text' value='$row[lastname]' class='w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500'>";
+    echo "</div>";
+    echo "<div class='mb-4'>";
+    echo "<label for='txthouse' class='block text-gray-300 text-sm font-bold mb-2'>Number and Street:</label>";
+    echo "<input name='txthouse' type='text' value='$row[house]' class='w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500'>";
+    echo "</div>";
+    echo "<div class='mb-4'>";
+    echo "<label for='txttown' class='block text-gray-300 text-sm font-bold mb-2'>Town:</label>";
+    echo "<input name='txttown' type='text' value='$row[town]' class='w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500'>";
+    echo "</div>";
+    echo "<div class='mb-4'>";
+    echo "<label for='txtcounty' class='block text-gray-300 text-sm font-bold mb-2'>County:</label>";
+    echo "<input name='txtcounty' type='text' value='$row[county]' class='w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500'>";
+    echo "</div>";
+    echo "<div class='mb-4'>";
+    echo "<label for='txtcountry' class='block text-gray-300 text-sm font-bold mb-2'>Country:</label>";
+    echo "<input name='txtcountry' type='text' value='$row[country]' class='w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500'>";
+    echo "</div>";
+    echo "<div class='mb-4'>";
+    echo "<label for='txtpostcode' class='block text-gray-300 text-sm font-bold mb-2'>Postcode:</label>";
+    echo "<input name='txtpostcode' type='text' value='$row[postcode]' class='w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500'>";
+	echo "</div>";
+	echo "</div>";
+	if (isset($_GET['success'])) {
+		echo "<div  >";
+		echo "<p class='block text-green-300 text-sm font-bold mb-2 text-xl  text-center'>$_GET[success] </p>";
+		echo "</div>";
+	}
 
+    echo "<div class='text-center'>";
+    echo "<button type='submit' value='Save' name='submit' class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Save</button>";
+    echo "</div>";
+    echo "</form>";
+
+		 echo "</body>";
 } else {
    header("Location: index.php");
 }

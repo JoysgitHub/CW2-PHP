@@ -18,32 +18,46 @@
 		   $result = mysqli_query($conn,$sql);
 	   
 
-			//Build form arount the table
+		   //Build form arount the table
+		   $data['content'] .= "<body class='bg-gray-600 ' >";
 	      $data['content'] .= "<form  onsubmit='return confirmSubmition()'  method='post' action='deletestudent.php'>";
 
-		  // prepare page content
-		  $data['content'] .= "<table class='mainTable' border='1'>";
-		  $data['content'] .= "<tr><th colspan='11' align='center'>Student Details</th></tr>";
-		  $data['content'] .= "<tr><th>studentID</th><th>Name</th><th>Lastname</th><th>DOB</th><th>Street</th><th>Town</th><th>County</th><th>Country</th><th>Postcode</th><th>Hash</th></tr>";
+		   // prepare page content
+		  $data['content'] .= "<table class=' border border-black divide-y divide-black' bg-gray-900 border='1'>";
+		  $data['content'] .= "<tr><th class='text-white bg-gray-900 text-white text-2xl' colspan='12' align='center'>Student Details</th></tr>";
+		  $data['content'] .= "<tr><th class='text-white bg-gray-800 border border-black'>studentID</th>";
+			$data['content'] .="<th class='text-white bg-gray-800 border border-black'>Name</th><th class='text-white bg-gray-800 border border-black' >Lastname</th>";
+
+			$data['content'] .= "<th class='text-white bg-gray-800 border border-black'>DOB</th>";
+			$data['content'] .= "<th class='text-white bg-gray-800 border border-black'>Street</th>";
+			$data['content'] .= "<th class='text-white bg-gray-800 border border-black'>Town</th>";
+			$data['content'] .= "<th class='text-white bg-gray-800 border border-black'>County</th>";
+			$data['content'] .= "<th class='text-white bg-gray-800 border border-black'>Country</th>";
+			$data['content'] .= "<th class='text-white bg-gray-800 border border-black'>Postcode</th>";
+			$data['content'] .= "<th class='text-white bg-gray-800 border border-black'>Hash</th>";
+			$data['content'] .= "<th class='text-white bg-gray-800 border border-black'>Studentimage</th></tr>";
 		  // Display the student details with the columns
 		  while($row = mysqli_fetch_array($result)) {
-			 $data['content'] .= "<tr><td> $row[studentid] </td>";
-			 $data['content'] .= "<td> $row[firstname] </td>";
-			 $data['content'] .= "<td> $row[lastname] </td>";
-			 $data['content'] .= "<td> $row[dob] </td>";
-			 $data['content'] .= "<td> $row[house] </td>";
-			 $data['content'] .= "<td> $row[town] </td>";
-			 $data['content'] .= "<td> $row[county] </td>";
-			 $data['content'] .= "<td> $row[country] </td>";
-			 $data['content'] .= "<td> $row[postcode] </td>";
-			 $data['content'] .= " <td> $row[password] </td>";
-			 $data['content'] .= "<td><input type='checkbox' name='students[]' value='$row[studentid]'/> </td></tr>";
+			 $data['content'] .= "<tr><td class='px-4 py-2 text-white border border-black'> $row[studentid] </td>";
+			 $data['content'] .= "<td class='px-4 py-2 text-white border border-black'> $row[firstname] </td>";
+			 $data['content'] .= "<td class='px-4 py-2 text-white border border-black'> $row[lastname] </td>";
+			 $data['content'] .= "<td class='px-4 py-2 text-white border border-black'> $row[dob] </td>";
+			 $data['content'] .= "<td class='px-4 py-2 text-white border border-black'> $row[house] </td>";
+			 $data['content'] .= "<td class='px-4 py-2 text-white border border-black'> $row[town] </td>";
+			 $data['content'] .= "<td class='px-4 py-2 text-white border border-black'> $row[county] </td>";
+			 $data['content'] .= "<td class='px-4 py-2 text-white border border-black'> $row[country] </td>";
+			 $data['content'] .= "<td class='px-4 py-2 text-white border border-black'> $row[postcode] </td>";
+			 $data['content'] .= "<td class='px-4 py-2 text-white border border-black'> $row[password] </td>";
+			 $data['content'] .= " <td class='px-4 py-2 text-white border border-black'><img src='studentimage.php?id=$row[studentid]' height='100' width='100'  </td>";
+			 $data['content'] .= "<td class='px-4 py-2 text-white border border-black'><input type='checkbox' name='students[]' value='$row[studentid]'/> </td></tr>";
 		  }
 		  $data['content'] .= "</table>";
-
+		  $data['content'] .= "<div class='mx-auto'>";
 
 		  //Create delete button and submit student id array.
-		  $data['content'] .= "<input type='submit' class=\"deleteButton\" name='deleteButton' value='Delete'/>";
+		  /* $data['content'] .= "<button type='submit' class=\"deleteButton\" name='deleteButton' value='Delete'/>Delete</button>"; */
+		  $data['content'] .= "<button type='submit' class='  bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-8 '>Delete</button>";
+		  $data['content'] .= "</div>";
 		  $data['content'] .= "</form>";
 		  // render the template
 		  echo template("templates/default.php", $data);
@@ -54,6 +68,7 @@
 		   }
 
 		  //Display returned deleted number of students in the success array.
+		echo "<div class='mx-auto' > ";
 		  if (isset($_GET['success'])) {
 			  if ($_GET['success'] == 1) {
 			  
@@ -63,7 +78,8 @@
 				  echo "<p style='color: green; font-weight: bold;'> Successfully Deleted $_GET[success] Students</p>";
 			  }
 		  }
-
+		echo "</div>";
+		   $data['content'] .= "</body>";
 	}else{
 
       echo template("templates/login.php", $data);

@@ -23,6 +23,8 @@ function generatePasswordHash($password): string{
 
 // check logged in
 if (isset($_SESSION['id'])) {
+	
+
 
 	//Check if any fields are empty and return error
 	foreach ($_POST as $key => $value) {
@@ -32,7 +34,19 @@ if (isset($_SESSION['id'])) {
 		}
 	}
 
+	//if file is set check file type. if not jpg, jpeg then return error
+	if (isset($_FILES['studentImage'])) {
+		$image = $_FILES['studentImage']['tmp_name'];
+		
+		$imagedata = addslashes(file_get_contents($image));
 
+		if (!exif_imagetype($image)) {
+			
+			header("Location: addstudent.php?error=Please Upload An Image File. Accepted Formats; jpg, png, jpeg");
+
+			die();
+		}
+	}	
 	//Clean all inputs 
 	$id = cleanInput($_POST['txtid']);
 	$name = cleanInput($_POST['txtfirstname']);
@@ -69,7 +83,7 @@ if (isset($_SESSION['id'])) {
 	$passHash = generatePasswordHash($password);
 
 	//SQL statment
-	$sql = "INSERT INTO student (studentid, password, dob, firstname, lastname, house, town, county, country, postcode)  VALUES ('$id','$passHash','$dob' , '$name', '$lastname', '$street', '$town', '$county', '$country', '$postcode');";
+	$sql = "INSERT INTO student (studentid, password, dob, firstname, lastname, house, town, county, country, postcode, studentimage)  VALUES ('$id','$passHash','$dob' , '$name', '$lastname', '$street', '$town', '$county', '$country', '$postcode','$imagedata' );";
 
 	$ret = mysqli_query($conn, $sql);
 

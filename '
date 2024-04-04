@@ -1,0 +1,31 @@
+" Press ? for help
+
+.. (up a dir)
+/xampp/htdocs/CW2-PHP/
++ [  ]_includes/
++ [  ]_sql/
++ [  ]css/
++ [  ]img/
++ [  ]js/
++ [  ]templates/
++ [  ]vendor/
+  [  ]adds.php
+  [  ]addstudent.php
+  [  ]assignmodule.php
+  [  ]authenticate.php
+  [  ]composer.json
+  [  ]composer.lock
+  [  ]deletestudent.php
+  [  ]details.php
+  [  ]displaystudent.php
+  [  ]index.php
+  [  ]logout.php
+  [  ]modules.php
+  [  ]password_hash.php
+  [  ]passwordCheck.php
+  [  ]README.md
+  [  ]script.js
+  [  ]seed.php
+  [  ]studentimage.php
+  [  ]students.php
+  [  ]test.php

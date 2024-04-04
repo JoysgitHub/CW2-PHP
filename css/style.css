@@ -1,23 +1,23 @@
-body{
+/* body{ */
 	
-	background-color: white;
-	font-family: aerial;
+/* 	background-color: white; */
+/* 	font-family: aerial; */
 
-}
+/* } */
 
-table{
+/* table{ */
 
-	border-collapse: collapse;
-}
+/* 	border-collapse: collapse; */
+/* } */
 
-.deleteButton{
-	width: 10%;
-	height: 5%;
-	color: white;
-	background-color: red;
-}
+/* .deleteButton{ */
+/* 	width: 10%; */
+/* 	height: 5%; */
+/* 	color: white; */
+/* 	background-color: red; */
+/* } */
 
-.deleteButton:hover{
-	background-color: darkred;
+/* .deleteButton:hover{ */
+/* 	background-color: darkred; */
 
-}
+/* } */

@@ -15,18 +15,36 @@
       $sql = "select * from studentmodules sm, module m where m.modulecode = sm.modulecode and sm.studentid = '" . $_SESSION['id'] ."';";
 
       $result = mysqli_query($conn,$sql);
-
-      // prepare page content
-      $data['content'] .= "<table border='1'>";
-      $data['content'] .= "<tr><th colspan='5' align='center'>Modules</th></tr>";
-      $data['content'] .= "<tr><th>Code</th><th>Type</th><th>Level</th></tr>";
-      // Display the modules within the html table
-      while($row = mysqli_fetch_array($result)) {
-         $data['content'] .= "<tr><td> $row[modulecode] </td><td> $row[name] </td>";
-         $data['content'] .= "<td> $row[level] </td></tr>";
-      }
-      $data['content'] .= "</table>";
-
+	
+      
+ //--------------------------------------------------------------------------------- 
+	  $data['content'] .= "<body class=\"bg-gray-800 text-white\">";
+	// prepare page content
+	$data['content'] .= "<div class='container mx-auto p-8'>";
+	$data['content'] .= "<h1 class='text-2xl font-bold text-center mb-4'>Modules</h1>";
+	$data['content'] .= "<div class='overflow-x-auto'>";
+	$data['content'] .= "<table class='table-auto w-full border-collapse'>";
+	$data['content'] .= "<thead>";
+	$data['content'] .= "<tr class='bg-gray-700'>";
+	$data['content'] .= "<th class='px-4 py-2 text-left text-white'>Code</th>";
+	$data['content'] .= "<th class='px-4 py-2 text-left text-white'>Type</th>";
+	$data['content'] .= "<th class='px-4 py-2 text-left text-white'>Level</th>";
+	$data['content'] .= "</tr>";
+	$data['content'] .= "</thead>";
+	$data['content'] .= "<tbody class='bg-gray-900'>";
+	// Display the modules within the html table
+	while($row = mysqli_fetch_array($result)) {
+		$data['content'] .= "<tr>";
+		$data['content'] .= "<td class='border px-4 py-2'>$row[modulecode]</td>";
+		$data['content'] .= "<td class='border px-4 py-2'>$row[name]</td>";
+		$data['content'] .= "<td class='border px-4 py-2'>$row[level]</td>";
+		$data['content'] .= "</tr>";
+	}
+	$data['content'] .= "</tbody>";
+	$data['content'] .= "</table>";
+	$data['content'] .= "</div>";
+	$data['content'] .= "</div>";
+	$data['content'] .= "</body>";
       // render the template
       echo template("templates/default.php", $data);
 
