@@ -1,7 +1,8 @@
 
 <?php
 
-   include("_includes/config.inc");
+include("_includes/config.inc");
+
    include("_includes/dbconnect.inc");
    include("_includes/functions.inc");
 
@@ -80,9 +81,10 @@
 		  }
 		echo "</div>";
 		   $data['content'] .= "</body>";
-	}else{
+   }else{
+	   header("Location: index.php");
 
-      echo template("templates/login.php", $data);
+      /* echo template("templates/login.php", $data); */
 	}
    echo template("templates/partials/footer.php");
 

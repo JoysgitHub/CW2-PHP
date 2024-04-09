@@ -13,6 +13,7 @@
 
 	$image = $row["studentimage"];
 
+
 	//Return the image	
 	echo $image;
 	mysqli_close($conn);

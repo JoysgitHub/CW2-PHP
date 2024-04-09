@@ -6,9 +6,9 @@
 	</a>
 		</div>
     <div class="flex space-x-4">
-        <a href="modules.php" class="text-xl text-white hover:text-blue-700 pl-4">My Modules</a>
-        <a href="assignmodule.php" class="text-xl text-white hover:text-blue-700">Assign Module</a>
-        <a href="details.php" class="text-xl text-white hover:text-blue-700">My Details</a>
+        <a href="modules.php" class="text-2xl text-white hover:text-blue-700 pl-4">My Modules</a>
+        <a href="assignmodule.php" class="text-2xl text-white hover:text-blue-700">Assign Module</a>
+        <a href="details.php" class="text-2xl text-white hover:text-blue-700">My Details</a>
     </div>
     <a href="logout.php" class="text-xl text-white hover:text-blue-700 ml-auto pr-4">Logout</a>
 </div>

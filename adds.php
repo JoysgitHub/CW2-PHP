@@ -68,10 +68,10 @@ if (isset($_SESSION['id'])) {
 	}
 		
 	//password length policy
-	if (strlen($password) < 8) {
+	if (strlen($password) <  8) {
 		header("Location: addstudent.php?error=Password Must be over 8 characters");
 		die();
-		}
+	}
 
 	//Enforce password policy	
 	if (!complexityChecker($password)) {
@@ -79,22 +79,49 @@ if (isset($_SESSION['id'])) {
 		header("Location: addstudent.php?error= Password must contain at least one uppercase letter,a lowercase letter, a number, and a symbol");
 		die();
 	}
-	
+
 	$passHash = generatePasswordHash($password);
 
 	//SQL statment
-	$sql = "INSERT INTO student (studentid, password, dob, firstname, lastname, house, town, county, country, postcode, studentimage)  VALUES ('$id','$passHash','$dob' , '$name', '$lastname', '$street', '$town', '$county', '$country', '$postcode','$imagedata' );";
+	/* $sql = "INSERT INTO student (studentid, password, dob, firstname, lastname, house, town, county, country, postcode, studentimage)  VALUES ('$id','$passHash','$dob' , '$name', '$lastname', '$street', '$town', '$county', '$country', '$postcode','$imagedata' );"; */
 
-	$ret = mysqli_query($conn, $sql);
+	/* $ret = mysqli_query($conn, $sql); */
 
+	// Prepare the SQL statement with placeholders
+	
+	$sql = "INSERT INTO student (studentid, password, dob, firstname, lastname, house, town, county, country, postcode)  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+	// Prepare the statement
+	$stmt = mysqli_prepare($conn, $sql);
+
+	// Binding cleaned variable data to the sql statment
+	mysqli_stmt_bind_param($stmt, "ssssssssss", $id, $passHash, $dob, $name, $lastname, $street, $town, $county, $country, $postcode);
+
+	
+	//Return error to addstudent page
+	if (!mysqli_stmt_execute($stmt)) {
+
+		header("Location: addstudent.php?error= Unsuccessful Could Not Add Student");
+		die();
+
+	}
+
+	
+	mysqli_stmt_close($stmt);
 	//Return successful message after completion to the addstudent.php page	
-	header("Location: addstudent.php?success=Successfully Added Student");
+	
+	$sql2 = "UPDATE student SET studentimage = '$imagedata' WHERE studentid='$id' ";
+		
+		
+	$ret = mysqli_query($conn, $sql2);
+		
+	header("Location: addstudent.php?success=Successfully Added Student ");
 
 
-   echo template("templates/default.php", $data);
+	echo template("templates/default.php", $data);
 
 } else {
-   header("Location: index.php");
+	header("Location: index.php");
 }
 mysqli_close($conn);
 echo template("templates/partials/footer.php");
