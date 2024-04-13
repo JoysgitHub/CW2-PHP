@@ -1,10 +1,181 @@
 <?php 
 
 require_once 'vendor/autoload.php'; //Auto loads classes and files 
-include("_includes/dbconnect.inc"); //Db initialisation and error check
 include("_includes/passwordLib.php"); //password hashing lib
 
 $faker = Faker\Factory::create('en_US');
+
+$SERVER = "localhost";
+$USERNAME = "root";
+$PASSWORD = "";
+$DB = "cw2_students";
+
+// Connect to the server
+$conn = mysqli_connect($SERVER, $USERNAME, $PASSWORD);
+
+if (mysqli_connect_errno()) {
+		echo "[-] ERROR: " . mysqli_connect_error();
+		die();
+	}
+
+//query to check if database exists
+$result = mysqli_query($conn, "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$DB' ");
+
+
+if (mysqli_num_rows($result) > 0) {
+	echo "[+] DATABASE $DB EXISTS.<br>";
+}else {
+	
+	// Create the databse
+	$sql = "CREATE DATABASE test2;";
+	$result = mysqli_query($conn, $sql);
+
+
+	//Checks the return value of the result
+	if (!$result) {
+		mysqli_close($conn);
+		die("[-] ERROR: ". mysqli_error($conn));
+	}
+
+	echo "[+] DATABASE $DB CREATED <br/>";
+
+	mysqli_close($conn);
+
+
+	$conn = mysqli_connect($SERVER, $USERNAME, $PASSWORD , $DB);
+
+	if (mysqli_connect_errno()) {
+		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		die();
+	}
+
+
+	$sql  = "CREATE TABLE `student` (
+	  `studentid` varchar(8) NOT NULL,
+	  `password` varchar(100) NOT NULL,
+	  `dob` date NOT NULL,
+	  `firstname` varchar(20) NOT NULL,
+	  `lastname` varchar(20) NOT NULL,
+	  `house` varchar(30) NOT NULL,
+	  `town` varchar(30) NOT NULL,
+	  `county` varchar(30) NOT NULL,
+	  `country` varchar(30) NOT NULL,
+	  `postcode` varchar(10) NOT NULL,
+	  
+	  `studentimage` LONGBLOB
+	);";
+
+
+	$result = mysqli_query($conn, $sql);
+
+	//Checks the return value of the result
+	if (!$result) {
+		mysqli_close($conn);
+		die("ERROR: ". mysqli_error($conn));
+		exit(1);
+	}
+
+
+	echo "[+]STUDENT TABLE CREATED<br/>";
+
+	//Create the module table
+
+	$sql = "CREATE TABLE `module` (
+	  `modulecode` varchar(10) NOT NULL,
+	  `name` varchar(100) NOT NULL,
+	  `level` int(11) NOT NULL
+	);";
+
+
+
+	$result = mysqli_query($conn, $sql);
+
+	//Checks the return value of the result
+	if (!$result) {
+		mysqli_close($conn);
+		die("ERROR: ". mysqli_error($conn));
+		exit(1);
+	}
+
+
+	echo "[+] MODULE TABLE CREATED<br/>";
+
+
+
+	//Create the students module table
+	$sql = "CREATE TABLE `studentmodules` (
+	  `studentid` varchar(8) NOT NULL,
+	  `modulecode` varchar(10) NOT NULL
+	);";
+
+
+
+	$result = mysqli_query($conn, $sql);
+
+	//Checks the return value of the result
+	if (!$result) {
+		mysqli_close($conn);
+		die("ERROR: ". mysqli_error($conn));
+		exit(1);
+	}
+
+
+	echo "[+] STUDENT MODULE TABLE CREATED<br/>";
+
+	//Create the primary keys for each table
+
+	 $sql = "ALTER TABLE `module`
+	 ADD PRIMARY KEY (`modulecode`);";
+	$result = mysqli_query($conn, $sql);
+
+
+	 $sql = "ALTER TABLE `student`
+	 ADD PRIMARY KEY (`studentid`);";
+	$result = mysqli_query($conn, $sql);
+
+
+	 $sql = "ALTER TABLE `studentmodules`
+	 ADD PRIMARY KEY (`studentid`,`modulecode`);";
+	$result = mysqli_query($conn, $sql);
+
+	echo "[+] PRIMARY KEYS ADDED<br/>";
+
+	echo "-----------------------------------------<br/>";
+	echo "-------INSERTING DATA-------------------<br/>";
+	echo "-----------------------------------------<br/>";
+
+
+	//Insert module code, name and level into the module table
+	$sql = "INSERT INTO `module` (`modulecode`, `name`, `level`) VALUES
+	('CO106', 'Programming Development', 1),
+	('CO107', 'Programming Principles', 1),
+	('IN251', 'Internet Systems Development', 2);";
+
+	$result = mysqli_query($conn, $sql);
+
+	//Checks the return value of the result
+	if (!$result) {
+		mysqli_close($conn);
+		die("ERROR: ". mysqli_error($conn));
+		exit(1);
+	}
+
+
+	echo "[+] MODEULES INSERTED <br/>";
+
+
+	mysqli_close($conn);
+
+}
+
+
+$conn = mysqli_connect($SERVER, $USERNAME, $PASSWORD , $DB);
+
+if (mysqli_connect_errno()) {
+	echo "Failed to connect to MySQL: " . mysqli_connect_error();
+	die();
+}
+
 
 function echoPara($name, $value):void{
 	
@@ -16,6 +187,7 @@ function echoPara($name, $value):void{
 //of their postcode to generate password and returns the hashed password.
 function generatePasswordHash($name,$post): string{
 	$trimPost = substr($post, 0, -4);
+	$trimPost = trim($trimPost);
 	$password = $name.$trimPost;
 	echoPara("Password", $password);	
 	$hashedPass = password_hash($password, $algo=PASSWORD_DEFAULT);	
@@ -50,6 +222,7 @@ function randomDOB(): string{
 	$DOB = $faker->dateTimeBetween( $maxBirth,$minBirth)->format('Y-m-d');
 	return $DOB;
 }
+
 //--------------------MAIN------------------------------
 //Checks if id exists, returns  the last id
 $sql = "SELECT studentid FROM student ORDER BY studentid DESC LIMIT 1";
@@ -57,7 +230,7 @@ $ret = mysqli_query($conn, $sql);
 
 
 $rows =	mysqli_num_rows($ret);
-echoPara("Num of Rows",$rows);
+/* echoPara("Num of Rows",$rows); */
 
 if (mysqli_num_rows($ret) > 0) {
 	$lastId = mysqli_fetch_assoc($ret);
@@ -90,15 +263,22 @@ for ($i=0; $i < 5 ; $i++) {
 	$hashedPass = generatePasswordHash($firstName, $address[4]);
 	echoPara("Hashed Pass",$hashedPass);
 
-	$sql = "INSERT INTO student (studentid, password, dob, firstname, lastname, house, town, county, country, postcode)  VALUES ('$studentId','$hashedPass','$DOB' , '$firstName', '$lastName', '$address[0]', '$address[1]', '$address[2]', '$address[3]', '$address[4]');";
-	echo "$sql<br>";
+	$randomNum = rand(1,4);
+	$image = "C:/xampp/htdocs/CW2-PHP/img/student".$randomNum.".jpg";
+	
+		
+	$imagedata = addslashes(file_get_contents($image));
+
+
+	$sql = "INSERT INTO student (studentid, password, dob, firstname, lastname, house, town, county, country, postcode, studentimage)  VALUES ('$studentId','$hashedPass','$DOB' , '$firstName', '$lastName', '$address[0]', '$address[1]', '$address[2]', '$address[3]', '$address[4]', '$imagedata');";
+	/* echo "$sql<br>"; */
 	echo "---------------------------<br>";
 	$result = mysqli_query($conn, $sql);
 
 	//Checks the return value of the result
 	if (!$result) {
 		mysqli_close($conn);
-		die("error result: ". mysqli_error($conn));
+		die("ERROR: ". mysqli_error($conn));
 		exit(1);
 	}
 	$lastId++;
