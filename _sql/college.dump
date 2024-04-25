@@ -43,3 +43,18 @@ ALTER TABLE `student`
 
 ALTER TABLE `studentmodules`
  ADD PRIMARY KEY (`studentid`,`modulecode`);
+
+
+
+
+CREATE TABLE `admin` (
+   id INT AUTO_INCREMENT PRIMARY KEY,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `firstname` varchar(20) NOT NULL,
+  `lastname` varchar(20) NOT NULL
+
+);
+
+INSERT INTO `admin` (`id`,`username` ,`password`, `firstname`, `lastname`) VALUES
+(NULL, 'admin','$2y$10$.LJBOl64nZWEVVE/v5mgNuzR01zx1zoyXuGJUa/zp2U.MQxkps3LS', 'Jon', 'Smith');

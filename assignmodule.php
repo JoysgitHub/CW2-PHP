@@ -13,13 +13,29 @@ if (isset($_SESSION['id'])) {
 
    // If a module has been selected
    if (isset($_POST['selmodule'])) {
-      $sql = "insert into studentmodules values ('" .  $_SESSION['id'] . "','" . $_POST['selmodule'] . "');";
-	  $result = mysqli_query($conn, $sql);
-	  /* $data['content'] .= "<body class=\"bg-gray-800\">"; */
-		header("Location: modules.php ");
-      /* $data['content'] .= "<p class=\" text-green-500\" >The module " . $_POST['selmodule'] . " has been assigned to you</p>"; */
-	 /* $data['content'] .=  "</body>"; */
-   }
+
+	$sql_check = "SELECT COUNT(*) AS count FROM studentmodules WHERE studentid = '{$_SESSION['id']}' AND modulecode = '{$_POST['selmodule']}'";
+	$result_check = mysqli_query($conn, $sql_check);
+
+	if ($result_check) {
+		$row = mysqli_fetch_assoc($result_check);
+		$count = $row['count'];
+    
+		if ($count > 0) {
+			// Record already exists, redirect with an error message
+			header("Location: modules.php");
+			exit();
+		} else {
+
+
+		  $sql = "insert into studentmodules values ('" .  $_SESSION['id'] . "','" . $_POST['selmodule'] . "');";
+		  $result = mysqli_query($conn, $sql);
+
+
+				header("Location: modules.php ");
+	}
+	}
+	}
    else  // If a module has not been selected
    {
 
