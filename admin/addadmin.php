@@ -6,8 +6,8 @@ include("_includes/functions.inc");
 
 include ("_includes/passwordLib.php");
 
-// check logged in
-if (isset($_SESSION['id'])) {
+// Check if session id is set and if user is an admin
+if (isset($_SESSION['id']) && isAdmin($_SESSION['id']) == true) {
 
    echo template("templates/partials/header.php");
    echo template("templates/partials/nav.php");

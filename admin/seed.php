@@ -8,8 +8,9 @@ include("_includes/dbconnect.inc");
 include("_includes/functions.inc");
 include ("_includes/passwordLib.php");
 
-if (isset($_SESSION['id'])) {
+/* if (isset($_SESSION['id'])) { */
  
+if (isset($_SESSION['id']) && isAdmin($_SESSION['id']) == true) {
 
 	echo template("templates/partials/header.php");
 	echo template("templates/partials/nav.php");

@@ -116,4 +116,31 @@ function complexityChecker($password):bool{
 
 }
 
+
+/**
+ * Admin checker
+ *
+ * @param $args   -  Session ID
+ * @return bool	  - Outputs true if user admin
+ *
+ * 
+ */
+function isAdmin($sessionID):bool{
+
+	global $conn;
+
+    $sql = "SELECT COUNT(*) AS count FROM admin WHERE username = '$sessionID'";
+	$result = mysqli_query($conn, $sql);
+	$row = mysqli_fetch_assoc($result);
+	
+	if($row['count'] > 0 ) {
+		return true;
+	}else {
+		return false;
+	}
+
+}
+
+
+
 ?>

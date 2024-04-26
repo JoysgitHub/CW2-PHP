@@ -6,7 +6,7 @@ include("_includes/functions.inc");
 
 
 // check logged in
-if (isset($_SESSION['id'])) {
+if (isset($_SESSION['id']) && isAdmin($_SESSION['id']) == false) {
 
    echo template("templates/partials/header.php");
    echo template("templates/partials/nav.php");
@@ -62,6 +62,7 @@ if (isset($_SESSION['id'])) {
    echo template("templates/default.php", $data);
 
 } else {
+	unset($_SESSION['id']);
    header("Location: index.php");
 }
 

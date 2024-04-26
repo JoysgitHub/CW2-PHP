@@ -1,3 +1,4 @@
+
 <?php
 
 include "passwordLib.php";
@@ -12,7 +13,7 @@ include "passwordLib.php";
 function validatelogin($id,$password) {
    global $conn;
    // Build an SQL statment that will return a record with a matching id
-   $sql = "select * from student where studentid='$id';";
+   $sql = "select * from student where studentid ='$id';";
 
 	echo "STATMENT: $sql";
 
@@ -115,5 +116,31 @@ function complexityChecker($password):bool{
 	}
 
 }
+
+
+/**
+ * Admin checker
+ *
+ * @param $args   -  Session ID
+ * @return bool	  - Outputs true if user admin
+ *
+ * 
+ */
+function isAdmin($sessionID):bool{
+
+	global $conn;
+
+    $sql = "SELECT COUNT(*) AS count FROM admin WHERE username = '$sessionID'";
+	$result = mysqli_query($conn, $sql);
+	$row = mysqli_fetch_assoc($result);
+	
+	if($row['count'] > 0 ) {
+		return true;
+	}else {
+		return false;
+	}
+
+}
+
 
 ?>

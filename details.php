@@ -6,7 +6,7 @@ include("_includes/functions.inc");
 
 
 // check logged in
-if (isset($_SESSION['id'])) {
+if (isset($_SESSION['id']) && isAdmin($_SESSION['id']) == false ) {
 
    echo template("templates/partials/header.php");
    echo template("templates/partials/nav.php");
@@ -54,8 +54,22 @@ if (isset($_SESSION['id'])) {
 	 echo "<body class=\"bg-gray-800\">";
     echo "<div class='container mx-auto p-8'>";
     echo "<h2 class='text-2xl text-white text-center mb-4'>My Details</h2>";
-    echo "<div class='flex justify-center'>";
-    echo "<img src='studentimage.php?id=$_SESSION[id]' class='h-40  w-48  rounded-lg ' alt='Student Image'><br/>";
+	echo "<div class='flex justify-center'>";
+
+
+
+if (!empty($row['studentimage'])) {
+    // Encode the image data
+    $base64Image = base64_encode($row['studentimage']);
+    
+    // Output the image tag with the encoded image data
+    echo "<img src='data:image/jpeg;charset=utf8;base64,$base64Image'class='h-40  w-48  rounded-lg ' alt='Student Image'>";
+} else {
+    // If studentimage is null or empty, output a placeholder image or handle it accordingly
+  echo "No image available";
+}
+
+
     echo "</div>";
 	echo "<br/>";
  
@@ -106,7 +120,8 @@ echo "<form name='frmdetails' action='$_SERVER[PHP_SELF]' method='post' class='m
 
 		 echo "</body>";
 } else {
-   header("Location: index.php");
+	unset($_SESSION['id']);   
+	header("Location: index.php");
 }
 
 echo template("templates/partials/footer.php");

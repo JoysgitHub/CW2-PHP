@@ -6,8 +6,9 @@
 
 
    // check logged in
-   if (isset($_SESSION['id'])) {
+   /* if (isset($_SESSION['id'])) { */
 
+if (isset($_SESSION['id']) && isAdmin($_SESSION['id']) == false) {
       echo template("templates/partials/header.php");
       echo template("templates/partials/nav.php");
 
@@ -49,6 +50,7 @@
       echo template("templates/default.php", $data);
 
    } else {
+		unset($_SESSION['id']);
       header("Location: index.php");
    }
 

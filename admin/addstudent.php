@@ -7,8 +7,9 @@ include ("_includes/passwordLib.php");
 //xxs safety
 
 // check logged in
-if (isset($_SESSION['id'])) {
+/* if (isset($_SESSION['id'])) { */
 
+if (isset($_SESSION['id']) && isAdmin($_SESSION['id']) == true) {
    echo template("templates/partials/header.php");
    echo template("templates/partials/nav.php");
 

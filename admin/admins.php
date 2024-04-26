@@ -9,8 +9,9 @@ include("_includes/config.inc");
 
    // check logged in
 
-   if (isset($_SESSION['id'])) {
+   /* if (isset($_SESSION['id'])) { */
 
+if (isset($_SESSION['id']) && isAdmin($_SESSION['id']) == true) {
 		  echo template("templates/partials/header.php");
 
 		  echo template("templates/partials/nav.php");
@@ -25,7 +26,7 @@ include("_includes/config.inc");
 	      $data['content'] .= "<form  onsubmit='return confirmSubmition()'  method='post' action='deleteadmin.php'>";
 
 		   // prepare page content
-		  $data['content'] .= "<table class=' border border-black divide-y divide-black' bg-gray-900 border='1'>";
+		  $data['content'] .= "<table class=' border border-black divide-y divide-black' bg-gray-900 border='1' width=100% >";
 		  $data['content'] .= "<tr><th class='text-white bg-gray-900 text-white text-2xl' colspan='12' align='center'> Admin Details</th></tr>";
 		  $data['content'] .= "<tr><th class='text-white bg-gray-800 border border-black'>ID </th>";
 

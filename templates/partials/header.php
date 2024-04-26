@@ -1,7 +1,9 @@
 <html>
 
    <head>
-      <title>BNU Student Web Application</title>
+	  <title>BNU Student Web Application</title>
+
+<link rel="icon" type="image/png" href="/img/logo_uni.png">
 	<!--<link rel="stylesheet" type="text/css" href="/CW2-PHP/css/style.css">-->   
 <!--Tailwind css link and script-->
 <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">	

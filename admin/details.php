@@ -6,7 +6,7 @@ include("_includes/functions.inc");
 
 
 // check logged in
-if (isset($_SESSION['id'])) {
+if (isset($_SESSION['id']) && isAdmin($_SESSION['id']) == true  ) {
 
    echo template("templates/partials/header.php");
    echo template("templates/partials/nav.php");
@@ -68,7 +68,6 @@ if (isset($_SESSION['id'])) {
    /* // render the template */
    /* echo template("templates/default.php", $data); */
 echo "<form name='frmdetails' action='$_SERVER[PHP_SELF]' method='post' class='max-w-md mx-auto'>";
-
 
 
 echo "<div class='mb-4'>";
