@@ -9,6 +9,8 @@
         <a href="modules.php" class="text-2xl text-white hover:text-blue-700 pl-4">My Modules</a>
         <a href="assignmodule.php" class="text-2xl text-white hover:text-blue-700">Assign Module</a>
         <a href="details.php" class="text-2xl text-white hover:text-blue-700">My Details</a>
+        <a href="passwordchange.php" class="text-2xl text-white hover:text-blue-700">Password</a>
+        <a href="updateimage.php" class="text-2xl text-white hover:text-blue-700">Image</a>
     </div>
     <a href="logout.php" class="text-xl text-white hover:text-blue-700 ml-auto pr-4">Logout</a>
 </div>
