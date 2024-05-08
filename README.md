@@ -11,14 +11,17 @@ This application also allows administrators to manage current students and admin
 4. Visit the your project folder in a browser and you should see a login screen
 
 ## Default Student Login
-[Student Panel]( https://cw2-student.infinityfreeapp.com/index.php)
+
+<a href="https://cw2-student.infinityfreeapp.com/index.php" target="_blank">Student Panel</a>
+
 
 - Student ID: 20000000
 - Password: test
 
 ## Default Admin Login
 
-[Admin Panel]( https://cw2-student.infinityfreeapp.com/admin/index.php )
+
+<a href="https://cw2-student.infinityfreeapp.com/admin/index.php" target="_blank">Admin Panel</a>
 - Student ID: admin
 - Password: test
 
