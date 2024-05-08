@@ -1,6 +1,7 @@
-# bnu-php-example
+# BNU STUDENT WEBSITe
 
-This script is for students at Bucks New Uni learning PHP in the "Open Source Systems" module. It is also a good starter project for anyone who is looking to learn PHP and MySQL.
+This is a PHP student managment application, designed to allow students to login, edit personal detail, check and add modules.
+This application also allows administrators to manage current students and admins and add new students.
 
 ## Installation Instructions
 
@@ -9,12 +10,18 @@ This script is for students at Bucks New Uni learning PHP in the "Open Source Sy
 3. Update "_includes/dbconnect.inc" with your database login credentials
 4. Visit the your project folder in a browser and you should see a login screen
 
-## Default Login
-
-The database is initialised with the following user setup:
+## Default Student Login
+[Student Panel]( https://cw2-student.infinityfreeapp.com/index.php)
 
 - Student ID: 20000000
 - Password: test
+
+## Default Admin Login
+
+[Admin Panel]( https://cw2-student.infinityfreeapp.com/admin/index.php )
+- Student ID: admin
+- Password: test
+
 
 ## What does this web app demonstrate?
 
@@ -28,12 +35,4 @@ The database is initialised with the following user setup:
 - how to implement $_SESSION and check that a user is logged in
 - how to use PHP functions and how to properly document your functions using PHP comments (see _includes/functions.inc)
 
-## How can this web app be improved?
 
-This is a very basic web app and there are many things that would likely be enhanced if it was to be used in a production (live environment). Some of these are listed below:
-
-- protect your SQL queries against SQL injection (pretty important!)
-- use bootstrap to improve the UI
-- use jQuery for on-page behaviour, unobtrustive validation, etc...
-- the potential use of an MVC framework such as CodeIgniter (good) or Laravel (better)
-- create a simple installation script which checks whether the tables are already created in the database and if they are not, it runs the table creation and data seeding SQL commands.
