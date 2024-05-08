@@ -1,4 +1,4 @@
-# BNU STUDENT WEBSITe
+# BNU STUDENT WEBSITE
 
 This is a PHP student managment application, designed to allow students to login, edit personal detail, check and add modules.
 This application also allows administrators to manage current students and admins and add new students.
