@@ -33,7 +33,6 @@ This application also allows administrators to manage current students and admin
 - how to implement user authentication (login) using the PHP password_verify() function
 - how to generate a secure hash of a password (see password_hash.php)
 - how to implement a basic templating system (this, in turn, demonstrates how to separate business logic from the presentation layer)
-- how to use the \<\<\<EOD notation to allow building of a multi-line string (see details.php)
 - how to perform redirects using the PHP header() function
 - how to implement $_SESSION and check that a user is logged in
 - how to use PHP functions and how to properly document your functions using PHP comments (see _includes/functions.inc)
