@@ -14,17 +14,10 @@ This application also allows administrators to manage current students and admin
 
 <a href="https://cw2-student.infinityfreeapp.com/index.php" target="_blank">Student Panel</a>
 
-
-- Student ID: 20000000
-- Password: test
-
 ## Default Admin Login
 
 
 <a href="https://cw2-student.infinityfreeapp.com/admin/index.php" target="_blank">Admin Panel</a>
-- Student ID: admin
-- Password: test
-
 
 ## What does this web app demonstrate?
 
