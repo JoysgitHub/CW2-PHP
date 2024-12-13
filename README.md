@@ -10,14 +10,6 @@ This application also allows administrators to manage current students and admin
 3. Update "_includes/dbconnect.inc" with your database login credentials
 4. Visit the your project folder in a browser and you should see a login screen
 
-## Default Student Login
-
-<a href="https://cw2-student.infinityfreeapp.com/index.php" target="_blank">Student Panel</a>
-
-## Default Admin Login
-
-
-<a href="https://cw2-student.infinityfreeapp.com/admin/index.php" target="_blank">Admin Panel</a>
 
 ## What does this web app demonstrate?
 
